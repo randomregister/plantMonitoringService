@@ -105,9 +105,6 @@ void loop() {
     reconnect();
   }
   client.loop();
-  sensor_analog = analogRead(sensor_pin);
-  _moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
-  Serial.println(_moisture);
 
   if(onlineEventToBeReported) {
       client.publish((user + plant_name + topic_onlineStatus).c_str(),"online",false);
@@ -115,6 +112,9 @@ void loop() {
   }
 
   if(moistureEventToBeReported) {
+      sensor_analog = analogRead(sensor_pin);
+      _moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
+      Serial.println(_moisture);
       char msg[1024]={0};
       itoa(_moisture ,msg,10);
       client.publish((user + plant_name + topic_moisture).c_str(),msg,false);

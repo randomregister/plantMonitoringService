@@ -86,7 +86,8 @@ void callback(char* topic, byte* message, unsigned int length) {
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-     String clientId = "jsharmy1_bunny";
+     String clientId = user+plant_name;
+    clientId += String(random(0xffff), HEX);
 
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
